@@ -8,14 +8,6 @@
 *.so
 *.dylib
 
-# debug/build folders
-build/
-out/
-bin/
-obj/
-Debug/
-Release/
-
 # vim temporary files
 *.swp
 *.swo
