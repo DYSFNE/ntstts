@@ -1,6 +1,6 @@
-/* filename: ntstts.c
+/* filename: ntstts.c */
 
-#include "ntstatusmodule.h"
+#include "ntstts.h"
 
 /* Lookup table for NTSTATUS subfield layout. */
 const struct ntstatus_subfield_desc 

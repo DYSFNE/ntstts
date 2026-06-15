@@ -20,6 +20,3 @@ ntstatus_ms_erref_table.c
 
 ntstatus_print.c
     ntstatus_print()
-
-main.c
-    program entry / testing

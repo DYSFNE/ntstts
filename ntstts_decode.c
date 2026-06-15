@@ -9,29 +9,30 @@ extract_field(ULONG status, const struct ntstatus_subfield_desc *desc)
 }
 
 void
-decode_ntstatus(ULONG status, struct ntstatus_decoded *msg)
+decode_ntstatus(ULONG status, struct ntstatus_decoded *out)
 {
-    msg->raw = status;
+    out->raw = status;
 
-    msg->severity_value = 
-        extract_field(msg->raw, &ntstatus_field_table[SEVERITY]);
+    out->severity_value = 
+        extract_field(out->raw, &ntstatus_field_table[NTSTATUS_FIELD_SEVERITY]);
 
-    msg->customer_value = 
-        extract_field(msg->raw, &ntstatus_field_table[CUSTOMER]);
+    out->customer_value = 
+        extract_field(out->raw, &ntstatus_field_table[NTSTATUS_FIELD_CUSTOMER]);
 
-    msg->reserved_value = 
-        extract_field(msg->raw, &ntstatus_field_table[RESERVED]);
+    out->reserved_value = 
+        extract_field(out->raw, &ntstatus_field_table[NTSTATUS_FIELD_RESERVED]);
 
-    msg->facility_value = 
-        extract_field(msg->raw, &ntstatus_field_table[FACILITY]);
+    out->facility_value = 
+        extract_field(out->raw, &ntstatus_field_table[NTSTATUS_FIELD_FACILITY]);
 
-    msg->code_value = 
-        extract_field(msg->raw, &ntstatus_field_table[CODE]);
+    out->code_value = 
+        extract_field(out->raw, &ntstatus_field_table[NTSTATUS_FIELD_CODE]);
 
     /* call these functions only if the NTSTATUS is Microsoft defined */
-    if (msg->customer_value == 0) {
-        w_lookup_severity(msg->severity_value, &msg->severity_info);
-        w_lookup_facility(msg->facility_value, &msg->facility_info);
-        W_lookup_ntstatus(msg->raw, &msg->status_info);
+    if (out->customer_value == 0) {
+        w_lookup_severity(out->severity_value, &out->severity_info);
+        w_lookup_facility(out->facility_value, &out->facility_info);
+        W_lookup_ntstatus(out->raw, &out->status_info);
     }
+    /* add functionality for custom ntstatus codes */
 }

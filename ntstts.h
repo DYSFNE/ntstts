@@ -16,9 +16,8 @@
 
 /* system headers */
 #include <windef.h>
-#include <stdint.h>
 #include <stddef.h>
-#include <stdbool.h>
+#include <winternl.h>
 
 /* typedefs/enums */
 enum ntstatus_field_id {
@@ -38,6 +37,12 @@ enum severity_field_id {
     SEVERITY_COUNT
 };
 
+enum facility_field_id {
+    FACILITY_SYSTEM,
+    FACILITY_DEBUGGER,
+    FACILITY_RPC_RUNTIME
+};
+
 /* struct definitions */
 struct ntstatus_subfield_desc {
     const char *name;
@@ -46,13 +51,13 @@ struct ntstatus_subfield_desc {
     ULONG mask;
 };
 
-struct ntstatus_severity_field {
+struct ntstatus_severity_entry {
     ULONG value;
     const char *name;
     const char *meaning;
 };
 
-struct ntstatus_facility_field {
+struct ntstatus_facility_entry {
     const char *name;
     ULONG value;
 };
@@ -90,10 +95,10 @@ extern const struct ntstatus_facility_entry facility_table[];
 extern const size_t facility_table_count;
 
 /* function declarations */
-ULONG extract_field(ULONG status, const struct subfield_desc *field);
-void w_lookup_severity(ULONG code, struct severity_field *field);
-void w_lookup_facility(ULONG facility_value, struct facility_field *field);
+void decoded_ntstatus(ULONG status, struct ntstatus_decoded *out);
+void w_lookup_severity(ULONG code, struct ntstatus_severity_entry *field);
+void w_lookup_facility(ULONG facility_value, struct ntstatus_facility_entry *field);
 void w_lookup_ntstatus(ULONG status, struct ntstatus_entry *field);
-void ntstatus_print(char *NtFnName, NTSTATUS status);
+void ntstatus_print(const char *NtFnName, NTSTATUS status);
 
 #endif /* NTSTATUS_INFO_H */
