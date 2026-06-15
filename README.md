@@ -2,10 +2,10 @@
 
 this project is for debugging windows error codes.
 
-#todo list
+## todo list
 #### small updates
-    - make sure the header files are added correctly to each file
-    - add the enums for facility codes
+    - ~~make sure the header files are added correctly to each file~~
+    - ~~add the enums for facility codes~~
     - finish ntstatus_print
 
 #### big picture features
