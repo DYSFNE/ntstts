@@ -96,9 +96,9 @@ extern const size_t facility_table_count;
 
 /* function declarations */
 void decoded_ntstatus(ULONG status, struct ntstatus_decoded *out);
-void w_lookup_severity(ULONG code, struct ntstatus_severity_entry *field);
-void w_lookup_facility(ULONG facility_value, struct ntstatus_facility_entry *field);
-void w_lookup_ntstatus(ULONG status, struct ntstatus_entry *field);
+BOOL w_lookup_severity(ULONG code, struct ntstatus_severity_entry *field);
+BOOL w_lookup_facility(ULONG facility_value, struct ntstatus_facility_entry *field);
+BOOL w_lookup_ntstatus(ULONG status, struct ntstatus_entry *field);
 void ntstatus_print(const char *NtFnName, NTSTATUS status);
 
 #endif /* NTSTATUS_INFO_H */

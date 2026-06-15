@@ -64,7 +64,7 @@ severity_table[SEVERITY_COUNT] = {
 };
 
 const size_t severity_table_count = 
-    sizeof(severity_field_table) / sizeof(severity_field_table[0]);
+    sizeof(severity_table) / sizeof(severity_table[0]);
 
 /* Lookup table for known NTSTATUS facility codes */
 /* Add enum of the values and fill in the types. */
@@ -212,4 +212,4 @@ facility_table[] = {
 };
 
 const size_t facility_table_count =
-    sizeof(facility_field_table) / sizeof(facility_field_table[0]);
+    sizeof(facility_table) / sizeof(facility_table[0]);
