@@ -108,9 +108,9 @@ extern const size_t facility_table_count;
 
 /* function declarations */
 int ntstts_decode(uint32_t status, struct ntstts_decoded *out);
-const struct *ntstts_severity_entry ntstts_lookup_severity(uint32_t severity);
-const struct *ntstts_facility_entry ntstts_lookup_facility(uint32_t facility);
-const struct *ntstts_status_entry ntstts_lookup_status(uint32_t status);
+const struct ntstts_severity_entry *ntstts_lookup_severity(uint32_t severity);
+const struct ntstts_facility_entry *ntstts_lookup_facility(uint32_t facility);
+const struct ntstts_status_entry *ntstts_lookup_status(uint32_t status);
 void ntstts_print(const char *NtFnName, NTSTATUS status);
 
 #endif /* NTSTATUS_INFO_H */
