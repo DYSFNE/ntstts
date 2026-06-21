@@ -17,19 +17,10 @@
 /* system headers */
 #include <windef.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <winternl.h>
 
 /* typedefs/enums */
-enum ntstatus_field_id {
-    NTSTATUS_FIELD_SEVERITY,
-    NTSTATUS_FIELD_CUSTOMER,
-    NTSTATUS_FIELD_RESERVED,
-    NTSTATUS_FIELD_FACILITY,
-    NTSTATUS_FIELD_CODE,
-
-    NTSTATUS_FIELD_COUNT
-};
-
 enum severity_field_id {
     SEVERITY_SUCCESS,
     SEVERITY_INFORMATIONAL,
@@ -74,61 +65,52 @@ enum facility_field_id {
 
 
 /* struct definitions */
-struct ntstatus_subfield_desc {
-    const char *name;
-    UINT8 shift;
-    UINT8 width;
-    ULONG mask;
-};
-
-struct ntstatus_severity_entry {
-    ULONG value;
+struct ntstts_severity_entry {
+    uint32_t value;
     const char *name;
     const char *meaning;
 };
 
-struct ntstatus_facility_entry {
+struct ntstts_facility_entry {
     const char *name;
-    ULONG value;
+    uint32_t value;
 };
 
-struct ntstatus_entry {
+struct ntstts_status_entry {
     const char *name;
-    ULONG value;
+    uint32_t value;
     const char *description;
 };
 
-struct ntstatus_decoded {
-    ULONG raw;
+struct ntstts_decoded {
+    uint32_t raw;
 
-    ULONG severity_value;
-    ULONG customer_value;
-    ULONG reserved_value;
-    ULONG facility_value;
-    ULONG code_value;
+    uint32_t severity;
+    uint32_t customer;
+    uint32_t reserved;
+    uint32_t facility;
+    uint32_t code;
 
-    struct ntstatus_severity_entry severity_info;
-    struct ntstatus_facility_entry facility_info;
-    struct ntstatus_entry status_info;
+    const struct ntstts_severity_entry *severity_info;
+    const struct ntstts_facility_entry *facility_info;
+    const struct ntstts_status_entry   *status_info;
 };
 
 /* extern global definitions */
-extern const struct ntstatus_subfield_desc ntstatus_subfield_table[];
+extern const struct ntstts_status_entry ntstts_status_table[];
+extern const size_t status_table_count;
 
-extern const struct ntstatus_entry ntstatus_table[];
-extern const size_t ntstatus_table_count;
-
-extern const struct ntstatus_severity_entry severity_table[];
+extern const struct ntstts_severity_entry ntstts_severity_table[];
 extern const size_t severity_table_count;
 
-extern const struct ntstatus_facility_entry facility_table[];
+extern const struct ntstts_facility_entry ntstts_facility_table[];
 extern const size_t facility_table_count;
 
 /* function declarations */
-void decoded_ntstatus(ULONG status, struct ntstatus_decoded *out);
-BOOL w_lookup_severity(ULONG code, struct ntstatus_severity_entry *field);
-BOOL w_lookup_facility(ULONG facility_value, struct ntstatus_facility_entry *field);
-BOOL w_lookup_ntstatus(ULONG status, struct ntstatus_entry *field);
-void ntstatus_print(const char *NtFnName, NTSTATUS status);
+int ntstts_decode(uint32_t status, struct ntstts_decoded *out);
+const struct *ntstts_severity_entry ntstts_lookup_severity(uint32_t severity);
+const struct *ntstts_facility_entry ntstts_lookup_facility(uint32_t facility);
+const struct *ntstts_status_entry ntstts_lookup_status(uint32_t status);
+void ntstts_print(const char *NtFnName, NTSTATUS status);
 
 #endif /* NTSTATUS_INFO_H */

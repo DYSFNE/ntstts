@@ -2,45 +2,9 @@
 
 #include "ntstts.h"
 
-/* Lookup table for NTSTATUS subfield layout. */
-const struct ntstatus_subfield_desc 
-ntstatus_subfield_table[NTSTATUS_FIELD_COUNT] = {
-    [NTSTATUS_FIELD_SEVERITY] = {
-        .name = "Severity", 
-        .shift = 30,
-        .width = 2,  
-        .mask = 0xC0000000UL,  
-    },
-    [NTSTATUS_FIELD_CUSTOMER] = {
-        .name = "Customer", 
-        .shift = 29,
-        .width = 1,  
-        .mask = 0x20000000UL, 
-    },
-    [NTSTATUS_FIELD_RESERVED] = { 
-        .name = "Reserved",
-        .shift = 28, 
-        .width = 1,  
-        .mask = 0x10000000UL, 
-    },
-    [NTSTATUS_FIELD_FACILITY] = {  
-        .name = "Facility",
-        .shift = 16, 
-        .width = 12, 
-        .mask = 0x0FFF0000UL,  
-    },
-    [NTSTATUS_FIELD_CODE] = {   
-        .name = "Code",
-        .shift = 0,  
-        .width = 16, 
-        .mask = 0x0000FFFFUL, 
-    }  
-};
-
 /* Lookup table for possible NTSTATUS severity codes */
-
-const struct ntstatus_severity_entry
-severity_table[SEVERITY_COUNT] = {
+const struct ntstts_severity_entry
+ntstts_severity_table[SEVERITY_COUNT] = {
     [SEVERITY_SUCCESS] = {
         .value = SEVERITY_SUCCESS,
         .name = "STATUS_SEVERITY_SUCCESS",
@@ -66,8 +30,8 @@ severity_table[SEVERITY_COUNT] = {
 const size_t severity_table_count = SEVERITY_COUNT;
 
 /* Lookup table for known NTSTATUS facility codes */
-const struct ntstatus_facility_entry
-facility_table[NTSTATUS_FACILITY_COUNT] = {
+const struct ntstts_facility_entry
+ntstts_facility_table[NTSTATUS_FACILITY_COUNT] = {
     [NTSTATUS_FACILITY_SYSTEM] = {
         .name = "FACILITY_SYSTEM",
         .value = 0x000UL,

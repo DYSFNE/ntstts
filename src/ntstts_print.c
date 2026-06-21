@@ -4,12 +4,12 @@
 #include "ntstts.h"
 
 void
-ntstatus_print(const char *NtFnName, NTSTATUS status)
+ntstts_print(const char *NtFnName, NTSTATUS status)
 {
-    ULONG raw_status = (ULONG)status;
-    struct ntstatus_decoded msg;
+    uint32_t raw_status = (uint32_t)status;
+    struct ntstts_decoded msg;
 
-    decoded_ntstatus(raw_status, &msg);
+    ntstts_decide(raw_status, &msg);
 
     printf("The function %s: returned %s", NtFnName, msg.severity_info.name);
 }

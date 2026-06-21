@@ -3,8 +3,8 @@
 /* Generated from Microsoft MS-ERREF NTSTATUS Values. */
 #include "ntstts.h"
 
-const struct ntstatus_entry 
-ntstatus_table[] = {
+const struct ntstts_status_entry 
+ntstts_status_table[] = {
     {
         .name = "STATUS_SUCCESS",
         .value = 0x00000000UL,
@@ -9002,5 +9002,5 @@ ntstatus_table[] = {
     },
 };
 
-const size_t ntstatus_table_count = 
-    sizeof(ntstatus_table) / sizeof(ntstatus_table[0]);
+const size_t status_table_count = 
+    sizeof(status_table_count) / sizeof(status_table_counti[0]); 
