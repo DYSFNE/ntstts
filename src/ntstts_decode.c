@@ -9,6 +9,8 @@ ntstts_decode(uint32_t status, struct ntstts_decoded *out)
     if (out == NULL) 
         return -1;
 
+    *out = (struct ntstts_decoded){0};
+
     out->raw = status;
 
     out->severity = (status & 0xC0000000UL) >> 30;
@@ -20,4 +22,6 @@ ntstts_decode(uint32_t status, struct ntstts_decoded *out)
     out->severity_info = ntstts_lookup_severity(out->severity);
     out->facility_info = ntstts_lookup_facility(out->facility);
     out->status_info = ntstts_lookup_status(out->raw);
+
+    return 0;
 }
