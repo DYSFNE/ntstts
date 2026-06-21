@@ -33,7 +33,7 @@ ntstts_lookup_status(uint32_t status)
 {
     size_t = i;
 
-    for (i = 0; i < ntstatus_table_count; i++) {
+    for (i = 0; i < status_table_count; i++) {
         if (ntstts_status_table[i].value == status)
             return &ntstts_status_table[i];
     }
