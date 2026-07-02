@@ -31,49 +31,50 @@ enum severity_field_id {
 };
 
 enum facility_field_id {
-    NTSTATUS_FACILITY_SYSTEM,
-    NTSTATUS_FACILITY_DEBUGGER,
-    NTSTATUS_FACILITY_RPC_RUNTIME,
-    NTSTATUS_FACILITY_RPC_STUBS,
-    NTSTATUS_FACILITY_IO_ERROR_CODE,
-    NTSTATUS_FACILITY_NTWIN32,
-    NTSTATUS_FACILITY_NTSSPI,
-    NTSTATUS_FACILITY_TERMINAL_SERVER,
-    NTSTATUS_FACILITY_MUI_ERROR_CODE,
-    NTSTATUS_FACILITY_USB_ERROR_CODE,
-    NTSTATUS_FACILITY_HID_ERROR_CODE,
-    NTSTATUS_FACILITY_FIREWIRE_ERROR_CODE,
-    NTSTATUS_FACILITY_CLUSTER_ERROR_CODE,
-    NTSTATUS_FACILITY_ACPI_ERROR_CODE,
-    NTSTATUS_FACILITY_SXS_ERROR_CODE,
-    NTSTATUS_FACILITY_TRANSACTION,
-    NTSTATUS_FACILITY_COMMONLOG,
-    NTSTATUS_FACILITY_VIDEO,
-    NTSTATUS_FACILITY_FILTER_MANAGER,
-    NTSTATUS_FACILITY_MONITOR,
-    NTSTATUS_FACILITY_GRAPHICS_KERNEL,
-    NTSTATUS_FACILITY_DRIVER_FRAMEWORK,
-    NTSTATUS_FACILITY_FVE_ERROR_CODE,
-    NTSTATUS_FACILITY_FWP_ERROR_CODE,
-    NTSTATUS_FACILITY_NDIS_ERROR_CODE,
-    NTSTATUS_FACILITY_HYPERVISOR,
-    NTSTATUS_FACILITY_IPSEC,
-    NTSTATUS_FACILITY_MAXIMUM_VALUE,
+    NTSTATUS_FACILITY_SYSTEM                = 0x000,
+    NTSTATUS_FACILITY_DEBUGGER              = 0x001,
+    NTSTATUS_FACILITY_RPC_RUNTIME           = 0x002,
+    NTSTATUS_FACILITY_RPC_STUBS             = 0x003,
+    NTSTATUS_FACILITY_IO_ERROR_CODE         = 0x004,
+    NTSTATUS_FACILITY_NTWIN32               = 0x007,
+    NTSTATUS_FACILITY_NTSSPI                = 0x009,
+    NTSTATUS_FACILITY_TERMINAL_SERVER       = 0x00A,
+    NTSTATUS_FACILITY_MUI_ERROR_CODE        = 0x00B,
+    NTSTATUS_FACILITY_USB_ERROR_CODE        = 0x010,
+    NTSTATUS_FACILITY_HID_ERROR_CODE        = 0x011,
+    NTSTATUS_FACILITY_FIREWIRE_ERROR_CODE   = 0x012,
+    NTSTATUS_FACILITY_CLUSTER_ERROR_CODE    = 0x013,
+    NTSTATUS_FACILITY_ACPI_ERROR_CODE       = 0x014,
+    NTSTATUS_FACILITY_SXS_ERROR_CODE        = 0x015,
+    NTSTATUS_FACILITY_TRANSACTION           = 0x019,
+    NTSTATUS_FACILITY_COMMONLOG             = 0x01A,
+    NTSTATUS_FACILITY_VIDEO                 = 0x01B,
+    NTSTATUS_FACILITY_FILTER_MANAGER        = 0x01C,
+    NTSTATUS_FACILITY_MONITOR               = 0x01D,
+    NTSTATUS_FACILITY_GRAPHICS_KERNEL       = 0x01E,
+    NTSTATUS_FACILITY_DRIVER_FRAMEWORK      = 0x020,
+    NTSTATUS_FACILITY_FVE_ERROR_CODE        = 0x021,
+    NTSTATUS_FACILITY_FWP_ERROR_CODE        = 0x022,
+    NTSTATUS_FACILITY_NDIS_ERROR_CODE       = 0x023,
+    NTSTATUS_FACILITY_HYPERVISOR            = 0x035,
+    NTSTATUS_FACILITY_IPSEC                 = 0x036,
+    NTSTATUS_FACILITY_MAXIMUM_VALUE         = 0x037,
 
-    NTSTATUS_FACILITY_COUNT
+    FACILITY_UPPER_BOUND
 };
 
 
 /* struct definitions */
+
+/* sizeof = 16 bytes - tightly packed */
 struct ntstts_severity_entry {
-    uint32_t value;
     const char *name;
     const char *meaning;
 };
 
+/* sizeof = 8 bytes - tightly packed */
 struct ntstts_facility_entry {
     const char *name;
-    uint32_t value;
 };
 
 struct ntstts_status_entry {
@@ -83,6 +84,10 @@ struct ntstts_status_entry {
 };
 
 struct ntstts_decoded {
+    const struct ntstts_severity_entry *severity_info;
+    const struct ntstts_facility_entry *facility_info;
+    const struct ntstts_status_entry   *status_info;
+
     uint32_t raw;
 
     uint32_t severity;
@@ -90,10 +95,6 @@ struct ntstts_decoded {
     uint32_t reserved;
     uint32_t facility;
     uint32_t code;
-
-    const struct ntstts_severity_entry *severity_info;
-    const struct ntstts_facility_entry *facility_info;
-    const struct ntstts_status_entry   *status_info;
 };
 
 /* extern global definitions */
@@ -101,10 +102,8 @@ extern const struct ntstts_status_entry ntstts_status_table[];
 extern const size_t status_table_count;
 
 extern const struct ntstts_severity_entry ntstts_severity_table[];
-extern const size_t severity_table_count;
 
 extern const struct ntstts_facility_entry ntstts_facility_table[];
-extern const size_t facility_table_count;
 
 /* function declarations */
 int ntstts_decode(uint32_t status, struct ntstts_decoded *out);

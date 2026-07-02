@@ -5,38 +5,42 @@
 const struct ntstts_severity_entry *
 ntstts_lookup_severity(uint32_t severity)
 {
-    size_t i;
-
-    for (i = 0; i < severity_table_count; i++) {
-        if (ntstts_severity_table[i].value == severity)
-            return &ntstts_severity_table[i];
-    }
-
-    return NULL;
+    return &ntstts_severity_table[severity];
 }
 
 const struct ntstts_facility_entry *
 ntstts_lookup_facility(uint32_t facility)
 {
-    size_t i;
+    const struct ntstts_facility_entry *entry;
 
-    for (i = 0; i < facility_table_count; i++) {
-        if (ntstts_facility_table[i].value == facility)
-            return &ntstts_facility_table[i];
-    }
+    if (facility >= FACILITY_UPPER_BOUND)
+        return NULL;
 
-    return NULL;
+    entry = &ntstts_facility_table[facility];
+
+    if (entry->name == NULL)
+        return NULL;
+
+    return entry;
 }
 
 const struct ntstts_status_entry *
 ntstts_lookup_status(uint32_t status)
 {
-    size_t i;
+    size_t low = 0;
+    size_t high = status_table_count;
+    size_t mid;
 
-    for (i = 0; i < status_table_count; i++) {
-        if (ntstts_status_table[i].value == status)
-            return &ntstts_status_table[i];
+    while (low =< high) {
+        mid = low + (high - low) / 2;
+        if (ntstts_status_table[mid],value < status) {
+            low = mid + 1;
+        } else if (ntstts_status_table[mid].value > status) {
+            high = mid;
+        } else {
+            return &nststts_status_table[mid];
+        }
     }
-    
+
     return NULL;
 }
